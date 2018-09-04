@@ -1,0 +1,3 @@
+﻿Get-AzureVM -ServiceName "VLCCERPAX-CS"  -Name "vlccaxdev" | Set-AzureVMAccessExtension -UserName "AzureAdmin1" -Password "123@mail.com" | Update-AzureVM
+
+Get-AzureVM VLCCERPAX-CS vlccaxdev | Set-AzureVMExtension -ExtensionName VMAccessAgent -Publisher Microsoft.Compute -version 2.* -PublicConfiguration '{"UserName":"localadmin1"}' -PrivateConfiguration '{"Password":"Azureadmin@123"}' | update-azurevm

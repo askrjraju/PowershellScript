@@ -1,0 +1,68 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/VM_IP.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string"
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D1_v2"
+    },
+    "adminUserName": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "networkInterfaceId": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2017-03-30",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "name": "custom-osDisk.bc0aca24-f364-470c-a43b-be6baacdfe74.vhd",
+            "createOption": "FromImage",
+            "image": {
+              "uri": "https://customdisk.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/custom-osDisk.bc0aca24-f364-470c-a43b-be6baacdfe74.vhd"
+            },
+            "vhd": {
+              "uri": "https://customdisk.blob.core.windows.net/vmcontaineree25ce56-3d54-44e3-bafe-8c1cb8c79803/osDisk.ee25ce56-3d54-44e3-bafe-8c1cb8c79803.vhd"
+            },
+            "caching": "ReadWrite"
+          }
+        },
+        "osProfile": {
+          "computerName": "[parameters('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[parameters('networkInterfaceId')]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "https://customdiag354.blob.core.windows.net/"
+          }
+        },
+        "provisioningState": 0
+      },
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "CentralIndia",
+      "name": "[parameters('vmName')]"
+    }
+  ]
+}

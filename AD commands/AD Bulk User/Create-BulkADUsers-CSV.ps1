@@ -1,0 +1,3 @@
+
+Add-ADGroupMember "Domain Admins" $_."samAccountName";
+Import-Csv "C:\Scripts\NewUser.csv" | ForEach-Object { New-ADUser -Name $_."Name" -Path $_."ParentOU" -SamAccountName $_."samAccountName" -UserPrincipalName $_."UPN" -AccountPassword (ConvertTo-SecureString "Pass@123" -AsPlainText -Force) -GivenName $_.GivenName -DisplayName $_.Name -Surname $_.Surname -ChangePasswordAtLogon $true -Enabled $true }

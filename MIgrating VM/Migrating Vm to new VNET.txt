@@ -1,0 +1,18 @@
+﻿# Login-AzureRmAccount
+# Get-AzureRmSubscription
+# Select-AzureRmSubscription -SubscriptionId 231db654-c3ed-4ed1-a868-7921dd104b70
+# Register-AzureRmResourceProvider -ProviderNamespace Microsoft.classicinfrastructuremigrate
+# Get-AzureRmResourceProvider -ProviderNamespace microsoft.classicinfrastructuremigrate
+# Add-AzureAccount
+# Get-AzureSubscription
+# Select-AzureSubscription -SubscriptionId 231db654-c3ed-4ed1-a868-7921dd104b70
+
+
+# Get-AzureService | ft ServiceName
+# $servicename = "myclassic"
+#$deployment = Get-AzureDeployment -ServiceName $servicename
+#$deploymentname = $deployment.DeploymentName
+ Move-AzureService -Prepare -ServiceName $servicename -DeploymentName $deploymentname -CreateNewVirtualNetwork
+ Move-AzureService -Commit -ServiceName $servicename -DeploymentName $deploymentname
+
+

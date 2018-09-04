@@ -1,0 +1,15 @@
+Name,GivenName,Surname,samAccountName,ParentOU,,,UPN
+clarks amritsar,clarks, amritsar,clarks.amritsar,"OU=TestOU,DC=TNT,DC=COM",,,clarks.amritsar@Tnt.com
+clarks cgrd ahb,clarks,cgrd ahb,clarks.cgrd.ahb,"OU=TestOU,DC=TNT,DC=COM",,,clarks.cgrd.ahb@Tnt.com
+clarks cmjalandhar,clarks, cmjalandhar,clarks.cmjalandhar,"OU=TestOU,DC=TNT,DC=COM",,,clarks.cmjalandhar@Tnt.com
+clarks drmysore,clarks, drmysore,clarks.drmysore,"OU=TestOU,DC=TNT,DC=COM",,,clarks.drmysore@Tnt.com
+clarks inorbit mum,clarks,inorbit mum,clarks.inorbit.mum,"OU=TestOU,DC=TNT,DC=COM",,,clarks.inorbit.mum@Tnt.com
+clarks kmlangr,clarks,kmlangr,clarks.kmlangr,"OU=TestOU,DC=TNT,DC=COM",,,clarks.kmlangr@Tnt.com
+clarks mantri,clarks, mantri,clarks.mantri,"OU=TestOU,DC=TNT,DC=COM",,,clarks.mantri@Tnt.com
+clarks mbdludhiana,clarks,mbdludhiana,clarks.mbdludhiana,"OU=TestOU,DC=TNT,DC=COM",,,clarks.mbdludhiana@Tnt.com
+clarks mgfjaipur,clarks,mgfjaipur,clarks.mgfjaipur,"OU=TestOU,DC=TNT,DC=COM",,,clarks.mgfjaipur@Tnt.com
+clarks mijaipur,clarks,mijaipur,clarks.mijaipur,"OU=TestOU,DC=TNT,DC=COM",,,clarks.mijaipur@Tnt.com
+clarks mmraipur,clarks,mmraipur,clarks.mmraipur,"OU=TestOU,DC=TNT,DC=COM",,,clarks.mmraipur@Tnt.com
+clarks orion,clarks,orion,clarks.orion,"OU=TestOU,DC=TNT,DC=COM",,,clarks.orion@Tnt.com
+clarks saludhiana,clarks,saludhiana,clarks.saludhiana,"OU=TestOU,DC=TNT,DC=COM",,,clarks.saludhiana@Tnt.com
+clarks swmumbai,clarks,swmumbai,clarks.swmumbai,"OU=TestOU,DC=TNT,DC=COM",,,clarks.swmumbai@Tnt.com

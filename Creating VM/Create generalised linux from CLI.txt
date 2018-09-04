@@ -1,0 +1,62 @@
+# create NIC manually from the portal for specific vm's AZR-UNFRS01-SRV-NIC
+
+azure availset create --resource-group LAMP_RSG --location SouthIndia --name LAMP_AVSET
+
+
+# Lamp VM
+
+azure vm create AZR-LAMP01-SRV -l "Southindia" --os-type linux --nic-name azr-lamp01-srv325 --resource-group LAMP_RSG --vm-size "Standard_DS12_V2" --availset-name LAMP_AVSET --storage-account-name lamppremiupstg01 --os-disk-vhd AZR-LAMP01-SRV.vhd --image-urn https://lamppremiupstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+ 
+# AZR-UNFA01-SRV
+
+azure availset create --resource-group UNIFY_RSG --location SouthIndia --name UNFA_AVSET
+azure vm create AZR-UNFA01-SRV -l "Southindia" --os-type linux --nic-name azr-unfa01-srv01 --resource-group UNIFY_RSG --vm-size "Standard_D12_V2" --availset-name UNFA_AVSET --storage-account-name unfstg01 --os-disk-vhd AZR-UNFA01-SRV.vhd --image-urn https://unfstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+# AZR-UNFA02-SRV
+azure vm create AZR-UNFA02-SRV -l "Southindia" --os-type linux --nic-name azr-unfa02-srv02 --resource-group UNIFY_RSG --vm-size "Standard_D12_V2" --availset-name UNFA_AVSET --storage-account-name unfstg02 --os-disk-vhd AZR-UNFA02-SRV.vhd --image-urn https://unfstg02.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+# AZR-UNFP01-SRV
+ : create AV set
+azure availset create --resource-group UNIFY_RSG --location SouthIndia --name UNFP_AVSET
+
+azure vm create AZR-UNFP01-SRV -l "Southindia" --os-type linux --nic-name AZR-UNFP01-SRV-NIC --resource-group UNIFY_RSG --vm-size "Standard_D12_V2" --availset-name UNFP_AVSET --storage-account-name unfstg01 --os-disk-vhd AZR-UNFP01-SRV.vhd --image-urn https://unfstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+# AZR-UNFP02-SRV
+azure vm create AZR-UNFP02-SRV -l "Southindia" --os-type linux --nic-name AZR-UNFP02-SRV-NIC --resource-group UNIFY_RSG --vm-size "Standard_D12_V2" --availset-name UNFP_AVSET --storage-account-name unfstg02 --os-disk-vhd AZR-UNFP02-SRV.vhd --image-urn https://unfstg02.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+# AZR-UNFDB01-SRV
+azure availset create --resource-group UNIFY_RSG --location SouthIndia --name UNFDB_AVSET
+
+azure vm create AZR-UNFDB01-SRV -l "Southindia" --os-type linux --nic-name azr-unfdb01-srv512  --resource-group UNIFY_RSG --vm-size "Standard_Ds12_V2" --availset-name UNFDB_AVSET --storage-account-name unfpremiumstg01 --os-disk-vhd AZR-UNFDB01-SRV.vhd --image-urn https://unfpremiumstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+# AZR-UNFRS01-SRV
+azure vm create AZR-UNFRS01-SRV -l "Southindia" --os-type linux --nic-name AZR-UNFRS01-SRV-NIC --resource-group UNIFY_RSG --vm-size "Standard_D12_V2" --availset-name UNFDB_AVSET --storage-account-name unfstg02 --os-disk-vhd AZR-UNFRS01-SRV.vhd --image-urn https://unfstg02.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+
+
+# AZR-JBOSS01-SRV
+
+azure availset create --resource-group CRM_RSG --location SouthIndia --name JBOSS_AVSET
+
+azure vm create AZR-JBOSS01-SRV -l "Southindia" --os-type linux --nic-name AZR-JBOSS01-SRV-NIC --resource-group CRM_RSG --vm-size "Standard_D2_V2" --availset-name JBOSS_AVSET --storage-account-name crmstg01 --os-disk-vhd AZR-JBOSS01-SRV.vhd --image-urn https://crmstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+azure vm create AZR-JBOSS02-SRV -l "Southindia" --os-type linux --nic-name AZR-JBOSS02-SRV-NIC --resource-group CRM_RSG --vm-size "Standard_D2_V2" --availset-name JBOSS_AVSET --storage-account-name crmstg02 --os-disk-vhd AZR-JBOSS02-SRV.vhd --image-urn https://crmstg02.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+
+
+azure availset create --resource-group UNIFY_RSG --location SouthIndia --name WEB_AVSET
+azure vm create AZR-WBSITE-SRV -l "Southindia" --os-type linux --nic-name azr-wbsite-srv589 --resource-group WEB_RSG --vm-size "Standard_D2_V2" --availset-name WEB_AVSET --storage-account-name unfstg01 --os-disk-vhd AZR-UNFA01-SRV.vhd --image-urn https://unfstg01.blob.core.windows.net/vhds/CentOSDisk.vhd
+
+
+
+
+
+
+
+
+
+
+
+
+
+

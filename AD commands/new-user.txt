@@ -1,0 +1,1 @@
+New-ADUser -Name "Anil Saini" -GivenName Anil -Surname Saini -SamAccountName Anil.saini -UserPrincipalName Anil.saini@tele.net -AccountPassword (Read-Host -AsSecureString "AccountPassword") -PassThru | Enable-ADAccount 

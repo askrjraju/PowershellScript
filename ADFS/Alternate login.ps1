@@ -1,0 +1,1 @@
+﻿Set-AdfsClaimsProviderTrust -TargetIdentifier "AD AUTHORITY" -AlternateLoginID mail -LookupForests vashishtpro.com

@@ -1,0 +1,35 @@
+# https://blogs.msdn.microsoft.com/azuresecurity/2015/11/21/explore-azure-disk-encryption-with-azure-powershell-part-2/
+
+# Create the Azure AD App & KeyVault from azure ARM Portal
+
+
+Login-AzureRmAccount
+Get-AzureRmSubscription
+Select-AzureRmSubscription -SubscriptionId c1d4c7ba-c7bb-4b6b-9c4a-163d0dac405a
+
+$rgName = "DLVRG"
+$vmName = "DLVOMSTEST"
+
+$aadClientID = "2d79de0c-d801-4d0f-aaa6-d03ee145edd0"
+$aadClientSecret = "vJYg6+7ZKVWYDz1acRTKbOtOpWjK69eAFtyo6apZtYM="
+$KeyVaultName = "DLVKEYVAULT"
+$keyEncryptionKeyName = "MyKeyEncryptionKey"
+
+# Next, set the Key Vault access policies to allow the specified Azure AD application to write secrets to Key Vault:
+
+Set-AzureRmKeyVaultAccessPolicy -VaultName $KeyVaultName -ServicePrincipalName $aadClientID -PermissionsToKeys all -PermissionsToSecrets all -ResourceGroupName $rgname
+ 
+
+$KeyVault = Get-AzureRmKeyVault -VaultName $KeyVaultName -ResourceGroupName $rgname
+
+$diskEncryptionKeyVaultUrl = $KeyVault.VaultUri
+
+$KeyVaultResourceId = $KeyVault.ResourceId
+$Key = Add-AzureKeyVaultKey -VaultName $KeyVaultName -Name $keyEncryptionKeyName -Destination Software
+
+$keyEncryptionKeyUrl = $key.Key.Kid
+
+Set-AzureRmKeyVaultAccessPolicy -VaultName $KeyVaultName -ResourceGroupName $rgname –EnabledForDiskEncryption
+
+Set-AzureRmVMDiskEncryptionExtension -ResourceGroupName $rgname -VMName $vmName -AadClientID $aadClientID -AadClientSecret $aadClientSecret -DiskEncryptionKeyVaultUrl $diskEncryptionKeyVaultUrl -DiskEncryptionKeyVaultId $KeyVaultResourceId -KeyEncryptionKeyUrl $keyEncryptionKeyUrl -KeyEncryptionKeyVaultId $KeyVaultResourceId;
+Get-AzureRmVmDiskEncryptionStatus  -ResourceGroupName $rgname -VMName $vmName

@@ -1,0 +1,27 @@
+$rgname = "firstprodRG"
+$ipName = "myIPaddress1"
+$storageAcc = "premstorageudhay"
+$locName = "southeastasia"
+$nicName = "mynic1"
+$vmName = "mynewvm1"
+
+$blobPath = "vhds/WindowsVMosDisk.vhd"
+$osDiskUri = $storageAcc.PrimaryEndpoints.Blob.ToString() + $blobPath
+
+
+$pip = New-AzureRmPublicIpAddress -Name $ipName -ResourceGroupName $rgName -Location $locName -AllocationMethod Dynamic
+
+
+$nic = New-AzureRmNetworkInterface -Name $nicName -ResourceGroupName $rgName -Location $locName -SubnetId $vnet.Subnets[0].Id -PublicIpAddressId $pip.Id
+
+$cred = Get-Credential -Message "Type the name and password of the local administrator account."
+
+$vm = New-AzureRmVMConfig -VMName $vmName -VMSize "Standard_DS1_V2"
+
+$vm = Set-AzureRmVMSourceImage -VM $vm -PublisherName MicrosoftWindowsServer -Offer WindowsServer -Skus 2012-R2-Datacenter -Version "latest"
+
+$vm = Set-AzureRmVMOperatingSystem -VM $vm -Windows -ComputerName $vmname -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+
+$vm = Add-AzureRmVMNetworkInterface -VM $vm -Id $nic.Id
+
+New-AzureRmVM -ResourceGroupName $rgName -Location $locName -VM $vm

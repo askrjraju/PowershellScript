@@ -1,0 +1,26 @@
+locName = "southIndia"
+$Rgname = "TestRg"
+$stName = "mymsvmstorage"
+
+$subnetName = "websubnet"
+$SingleSubnet = New-AzureRmVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix 192.168.1.0/24
+$vnetName = "TestVnet"
+$vnet = New-AzureRmVirtualNetwork -Name $vnetName -ResourceGroupName $Rgname -Location $locName -AddressPrefix 192.168.0.0/16 -Subnet $SingleSubnet
+ $vnet = Get-AzureRmVirtualNetwork -Name $vnetName -ResourceGroupName $Rgname 
+$IPName = "MYVMIP"
+$Pip = New-AzureRmPublicIpAddress -Name $IPName -ResourceGroupName $Rgname -Location $locName -AllocationMethod Dynamic
+$NicName = "MYVMNIC"
+$Nic = New-AzureRmNetworkInterface -Name $NicName -ResourceGroupName $Rgname -Location $locName -SubnetId $vnet.Subnets[0].id -PublicIpAddressId $pip.Id
+$cred = Get-Credential -Message "lalit nt5.0no!more1"
+$VmName = "Myvm"
+$VM = New-AzureRmVMConfig -VMName $VmName -VMSize Standard_A1
+$ComputerName = $VmName
+$VM = Set-AzureRmVMOperatingSystem -VM $VM -Windows -ComputerName $VmName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$vm = Add-AzureRmVMNetworkInterface -VM $vm -Id $Nic.Id
+$stAccount = Get-AzureRmStorageAccount -ResourceGroupName $Rgname -Name $stName
+$blobpath = "vhds/Win12.vhd"
+$osDiskuri = $stAccount.PrimaryEndpoints.Blob.ToString() + $blobpath
+$ImageURI = "https://mymsvmstorage.blob.core.windows.net/vhds/win12.vhd"
+$diskName = "MyOsDisk"
+$vm = Set-AzureRmVMOSDisk -VM $vm -Name $DiskName -VhdUri $osDiskUri -CreateOption fromImage -SourceImageUri $Imageuri -Windows
+New-AzureRmVM -ResourceGroupName $Rgname -Location $locName -VM $VM

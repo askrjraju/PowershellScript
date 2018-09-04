@@ -1,0 +1,28 @@
+﻿# Login-AzureRmAccount
+#  Get-AzureRmSubscription
+# Select-AzureRmSubscription -SubscriptionId 231db654-c3ed-4ed1-a868-7921dd104b70
+# Register-AzureRmResourceProvider -ProviderNamespace Microsoft.classicinfrastructuremigrate
+# Get-AzureRmResourceProvider -ProviderNamespace Microsoft.classicinfrastructuremigrate
+# Add-AzureAccount
+#Get-AzureSubscription
+# Select-AzureSubscription -SubscriptionId 231db654-c3ed-4ed1-a868-7921dd104b70
+#  Get-AzureService | ft ServiceName
+# $servicename = "classicvmoyo"
+# $deployment = Get-AzureDeployment -ServiceName $servicename
+# $deploymentname = $deployment.DeploymentName
+# $existingVnetRGname = "ArmRG"
+# $vnetname = "Armvnet"
+# $subnetname = "sebnet"
+ # Optional= $validate = Move-AzureService -Validate -ServiceName $serviceName `
+      -DeploymentName $deploymentName -UseExistingVirtualNetwork -VirtualNetworkResourceGroupName $existingVnetRGName -VirtualNetworkName $vnetName -SubnetName $subnetName
+  $validate.ValidationMessages
+  #  Move-AzureService -Prepare -ServiceName $servicename -DeploymentName $deploymentname -UseExistingVirtualNetwork -VirtualNetworkResourceGroupName $existingVnetRGname -VirtualNetworkName $vnetname -SubnetName $subnetname
+  # Move-AzureService -Commit -ServiceName $servicename -DeploymentName $deploymentname
+
+
+
+
+
+
+
+

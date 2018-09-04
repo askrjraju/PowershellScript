@@ -1,0 +1,59 @@
+﻿Login-AzureRmAccount
+Get-AzureRmSubscription 
+
+$Rgname = 'SQL'
+$stname = 'sqlbkpstg'
+
+$RSG = Get-AzureRmResourceGroup -Name $Rgname
+$STG = Get-AzureRmStorageAccount -Name $stname -ResourceGroupName $Rgname
+$prefixName = 'sql'
+$containerName= $prefixName + 'bkp'
+$policyName = $prefixName + 'policy'
+
+# Get the access keys for the ARM storage account  
+$accountKeys = Get-AzureRmStorageAccountKey -ResourceGroupName $RSG.ResourceGroupName -Name $stname
+
+# Create a new storage account context using an ARM storage account  
+$storageContext = New-AzureStorageContext -StorageAccountName $stname -StorageAccountKey $accountKeys[0].Value 
+
+# Creates a new container in blob storage  
+$container = New-AzureStorageContainer -Context $storageContext -Name $containerName  
+$cbc = $container.CloudBlobContainer  
+
+# Sets up a Stored Access Policy and a Shared Access Signature for the new container  
+$permissions = $cbc.GetPermissions();  
+$policyName = $policyName  
+$policy = new-object 'Microsoft.WindowsAzure.Storage.Blob.SharedAccessBlobPolicy'  
+$policy.SharedAccessStartTime = $(Get-Date).ToUniversalTime().AddMinutes(-5)  
+$policy.SharedAccessExpiryTime = $(Get-Date).ToUniversalTime().AddYears(10)  
+$policy.Permissions = "Read,Write,List,Delete"  
+$permissions.SharedAccessPolicies.Add($policyName, $policy)  
+$cbc.SetPermissions($permissions);  
+
+# Gets the Shared Access Signature for the policy  
+$policy = new-object 'Microsoft.WindowsAzure.Storage.Blob.SharedAccessBlobPolicy'  
+$sas = $cbc.GetSharedAccessSignature($policy, $policyName)  
+Write-Host 'Shared Access Signature= '$($sas.Substring(1))''
+
+#To Create SQL Credential
+USE master  
+CREATE CREDENTIAL 'https://sqlbkpstg.blob.core.windows.net/sqlbkp'
+   WITH IDENTITY='SHARED ACCESS SIGNATURE'
+   SECRET = 'sharedaccesssignature'
+GO
+
+
+#To backup 
+USE master;  
+ALTER DATABASE TEST 
+   SET RECOVERY FULL;  
+
+-- Back up the full AdventureWorks2014 database to the container that you created in Lesson 1  
+BACKUP DATABASE TEST   
+   TO URL = 'https://sqlbkk.blob.core.windows.net/sqlbp/TEST_onprem.bak'  
+
+#To Restore from URL
+
+RESTORE DATABASE TEST 
+   FROM URL = 'https://sqlbkk.blob.core.windows.net/sqlbp/TEST_onprem.bak'   
+   WITH REPLACE , STATS = 25

@@ -1,0 +1,27 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+	"vmSku": {
+	    "value": "Standard_A1"
+	},
+	"vmssName": {
+	    "value": "myscaleset"
+	},
+	"instanceCount": {
+	    "value": 1
+	},
+	"adminUsername": {
+	    "value": "lalit"
+	},
+	"adminPassword": {
+	    "value": "123@mail.com"
+	},
+	"customImageUri": {
+	    "value": "https://customdisk.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/custom-osDisk.bc0aca24-f364-470c-a43b-be6baacdfe74.vhd"
+	},
+	"osType": {
+	    "value": "Windows"
+	}
+    }
+}

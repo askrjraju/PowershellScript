@@ -1,0 +1,34 @@
+# azure config mode arm
+# Create ResourceGroup
+azure group create -n myResourceGroup -l SouthIndia
+
+# Create Storage Account 
+azure storage account create -g myResourceGroup -l Southindia --kind Storage --sku-name GRS mymslinuxstg01
+
+# Create Vnet
+ azure network vnet create -g myResourceGroup -l southindia -n myVnet -a 192.168.0.0/16
+
+# Create Subnet
+ azure network vnet subnet create -g myResourceGroup -e myVnet -n mySubnet -a 192.168.1.0/24
+
+# Create PubliciP
+
+azure network public-ip create -g myResourceGroup -l southindia -n myPublicIP  -d mypublicdns -a static -i 4
+
+
+
+# Create Nic
+azure network nic create -g myResourceGroup -l southindia -n myNic1 -m myVnet -k mySubnet
+
+# Create NSG
+azure network nsg create -g myResourceGroup -l Southindia -n myNetworkSecurityGroup
+
+# Bind the NGG to NIC
+azure network nic set -g myResourceGroup -o myNetworkSecurityGroup -n myNic1
+
+# Create Availability set
+azure availset create -g myResourceGroup -l SouthIndia -n myAvailabilitySet
+
+# Azure VM Create
+azure vm create --image-urn OpenLogic:CentOS:7.2:latest --admin-username lalit --resource-group myResourceGroup --location SOuthIndia --name LinuxVM --nic-name myNic1 --storage-account-name mymslinuxstg01 --os-type linux --vm-size "Standard_D2_V2"
+

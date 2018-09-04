@@ -1,0 +1,14 @@
+workflow Stopsrv {
+    inlineScript {
+        $Cred = Get-AutomationPSCredential -Name "Default Automation Credential"
+        
+        Add-AzureAccount -Credential $Cred
+        Set-AzureSubscription -SubscriptionName "Free Trial"
+        
+        Select-AzureSubscription -SubscriptionName "Free Trial"
+        
+        Stop-AzureVM -ServiceName "embeetest" -Name "Atsvm1" -force
+        Stop-AzureVM -ServiceName "embeetest" -Name "Atsvm2" -force
+        Stop-AzureVM -ServiceName "atsvm3" -Name "Atsvm3" -force
+    }
+}
